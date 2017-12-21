@@ -11,17 +11,22 @@ io.on('connection', function (socket){
     var username ='anonymous';
     var message = "";
     socket.on('chat message', function(msg){
-        message = username +' :'+ msg;
-        io.emit(message);
+        message = username +' : '+ msg;
+        // io.sockets.emit(message);
+        io.sockets.emit('broadcast',{ description: message });
         console.log(message);
     });
+
     socket.on('username', function(name){
         username = name;
-        console.log(username + " has entered the chatroom");
+        message = username + " has entered the chatroom";
+        console.log(message);
+        io.sockets.emit('userenter' , {description : message});
     })
+
     socket.on('disconnect', function(){
         message = username + ' disconnected';
-        io.emit(message);
+        io.sockets.emit('userexit',{ description: message });
         console.log(message);
     });
 });

@@ -31,13 +31,34 @@
         });
 
         //to handle incoming message
-        socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text(msg));
-        });
+        // socket.on('chat message', function(msg){
+        //     console.log("message is here");
+        //     $('#messages').append($('<li>').text(msg));
+        // });
+
+        // socket.on('disconnect', function(msg){
+        //     console.log("message is here");
+        //     $('#messages').append($('<li>').text(msg));
+        // });
+
+
+        socket.on('broadcast',function(msg) {
+          $('#messages').append($('<li>').text(msg.description));
+      });
+
+        socket.on('userenter',function(msg) {
+          $('#messages').append($('<li>').text(msg.description));
+      });
+
+      socket.on('userexit',function(msg) {
+          $('#messages').append($('<li>').text(msg.description));
+      });
+
+
     });
   </script>
   <body>
-    Enter your user name: <input id="name" /> <button id="username" >input</button>
+    <div>Enter your user name: <input id="name" /> <button id="username" >input</button> </div>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
